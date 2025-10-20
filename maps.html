@@ -16,7 +16,7 @@
      crossorigin=""></script>
 
      <style>
-        #map { height: 180px; }
+        #map { height: 680px; }
         .popup-image {
             max-width: 200px;
             height: auto;
@@ -30,6 +30,19 @@
 </body>
 <script>
 
+    var map = L.map('map').setView([8.360053042057906, 124.86834154336864], 17);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+var marker = L.marker([8.360053042057906, 124.86834154336864]).addTo(map);
+const dogeImage = "<img src='https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSz25nYKDXPpKqhZiXKmC4K00TpYAy4cj83mWPB6UlEXyHS_8K8BoTcJmXkriBIyIR87eySEaEZstDTVZAztwe5RCRgNRe4MO1OSZ1Jf8eE' class='popup-image'>";
+const popupContent = `${dogeImage}<br><b>Hello world!</b><br>I am a popup.`;
+
+marker.bindPopup(popupContent).openPopup();
+
+function initMap(mapDataUrl){
+
     var map = L.map('map').setView([8.360047179637865, 124.86822530594878], 17);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -37,11 +50,17 @@
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-var marker = L.marker([8.360047179637865, 124.86822530594878]).addTo(map);
-const dogeImage = "<img src='https://en.wikipedia.org/wiki/File:Original_Doge_meme.jpg' class='popup-image>";
-const popupContent = `${dogeImage}<br><b>Hello world!</b><br>I am a popup.`;
+fetch(mapDataUrl)
+.then(response => response.json())
+.then(data.forEach(pin=>{
+    const marker = L.marker([pin.lst,pin.lng]).addTo(map);
+    const img = `<img src='$(pin.img)' class=popup-image>`;
+    const popupContent = `${img}<br><b> ${pin.tittle} </b><br> ${pin.description}`;
 
-marker.bindPopup(popupContent).openPopup();
+    console.log(`${pin.name} Loaded` +date());
+}));
+
+}
 
 </script>
 </html>
