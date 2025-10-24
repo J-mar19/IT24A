@@ -72,6 +72,12 @@ function initMap(mapDataUrl){
             //Add all groups to map initially
             Object.values(markerGroups).forEach(group => group.addTo(map));
 
+            //Layer control
+            const baseMaps={
+                "OpenStreetMap":openStreetMap,
+                "Satellite": satellite
+            }
+
         })
     }
     document.addEventListener("DOMContentLoaded",()=>{
